@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         resource.add(source: MCResource.ODRSource(URL: URL(string: "odr://odr/odr.png")!))
-        resource.add(source: MCResource.HTTPSource(URL: URL(string: "https://dl.dropboxusercontent.com/u/103292/web.png")!))
+        resource.add(source: MCResource.HTTPSource(URL: URL(string: "https://github.com/Baglan/MCResource/raw/master/web.png")!))
         
         resource.beginAccessing { [unowned self] (url, error) in
             if let error = error {
