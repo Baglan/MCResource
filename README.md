@@ -40,10 +40,10 @@ resource.beginAccessing { [unowned self] (url, error) in
     // One of the sources succeeded
   }
 }
-```
 
 // 4. Inform the resource that it is no longer needed (will be done automatically if the resource is released)
 resource.endAccessing()
+```
   
 ## Notes
 
