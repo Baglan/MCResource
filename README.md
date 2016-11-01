@@ -50,6 +50,6 @@ resource.endAccessing()
 - MCResource API is influenced by (more like copied from) the NSBundleResourceRequest API, however, MCResource is currently limited to accessing a single file;
 - Progress API is not currently supported;
 - Error handling is somewhat limited;
-– HTTPSource will cache the file in the app's "Caches" folder;
+- HTTPSource will cache the file in the app's "Caches" folder;
 - Fetching will be attempted for sources in the order they were added (thus, add sources in the order of preference);
 - On-Demand Resource URLs follow this format: odr://odr_tag/file_path.
