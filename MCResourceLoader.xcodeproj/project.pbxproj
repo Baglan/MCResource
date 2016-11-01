@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8614A40E1DC5DB7200B92BD9 /* odr.png in Resources */ = {isa = PBXBuildFile; fileRef = 8614A40D1DC5DB7200B92BD9 /* odr.png */; settings = {ASSET_TAGS = (odr, ); }; };
 		86EC50FB1DC339FC00DFC612 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EC50FA1DC339FC00DFC612 /* AppDelegate.swift */; };
 		86EC50FD1DC339FC00DFC612 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EC50FC1DC339FC00DFC612 /* ViewController.swift */; };
 		86EC51001DC339FC00DFC612 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86EC50FE1DC339FC00DFC612 /* Main.storyboard */; };
@@ -14,6 +15,9 @@
 		86EC51051DC339FC00DFC612 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86EC51031DC339FC00DFC612 /* LaunchScreen.storyboard */; };
 		86EC51101DC339FC00DFC612 /* MCResourceLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EC510F1DC339FC00DFC612 /* MCResourceLoaderTests.swift */; };
 		86EC511B1DC339FC00DFC612 /* MCResourceLoaderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EC511A1DC339FC00DFC612 /* MCResourceLoaderUITests.swift */; };
+		86EC512A1DC33A1F00DFC612 /* MCResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EC51291DC33A1F00DFC612 /* MCResource.swift */; };
+		86FC50F01DC742DC00F4E125 /* ODRSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC50EF1DC742DC00F4E125 /* ODRSource.swift */; };
+		86FC50F21DC75D1600F4E125 /* HTTPSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC50F11DC75D1600F4E125 /* HTTPSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8614A40D1DC5DB7200B92BD9 /* odr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odr.png; sourceTree = "<group>"; };
 		86EC50F71DC339FC00DFC612 /* MCResourceLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCResourceLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86EC50FA1DC339FC00DFC612 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86EC50FC1DC339FC00DFC612 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +52,9 @@
 		86EC51161DC339FC00DFC612 /* MCResourceLoaderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MCResourceLoaderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		86EC511A1DC339FC00DFC612 /* MCResourceLoaderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCResourceLoaderUITests.swift; sourceTree = "<group>"; };
 		86EC511C1DC339FC00DFC612 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		86EC51291DC33A1F00DFC612 /* MCResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MCResource.swift; path = Classes/MCResource.swift; sourceTree = "<group>"; };
+		86FC50EF1DC742DC00F4E125 /* ODRSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ODRSource.swift; path = Classes/ODRSource.swift; sourceTree = "<group>"; };
+		86FC50F11DC75D1600F4E125 /* HTTPSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTTPSource.swift; path = Classes/HTTPSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +85,7 @@
 		86EC50EE1DC339FC00DFC612 = {
 			isa = PBXGroup;
 			children = (
+				86EC51281DC33A0400DFC612 /* Classes */,
 				86EC50F91DC339FC00DFC612 /* MCResourceLoader */,
 				86EC510E1DC339FC00DFC612 /* MCResourceLoaderTests */,
 				86EC51191DC339FC00DFC612 /* MCResourceLoaderUITests */,
@@ -97,6 +106,7 @@
 		86EC50F91DC339FC00DFC612 /* MCResourceLoader */ = {
 			isa = PBXGroup;
 			children = (
+				8614A40D1DC5DB7200B92BD9 /* odr.png */,
 				86EC50FA1DC339FC00DFC612 /* AppDelegate.swift */,
 				86EC50FC1DC339FC00DFC612 /* ViewController.swift */,
 				86EC50FE1DC339FC00DFC612 /* Main.storyboard */,
@@ -123,6 +133,16 @@
 				86EC511C1DC339FC00DFC612 /* Info.plist */,
 			);
 			path = MCResourceLoaderUITests;
+			sourceTree = "<group>";
+		};
+		86EC51281DC33A0400DFC612 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				86EC51291DC33A1F00DFC612 /* MCResource.swift */,
+				86FC50EF1DC742DC00F4E125 /* ODRSource.swift */,
+				86FC50F11DC75D1600F4E125 /* HTTPSource.swift */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +207,9 @@
 		86EC50EF1DC339FC00DFC612 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					odr,
+				);
 				LastSwiftUpdateCheck = 0810;
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Mobile Creators";
@@ -238,6 +261,7 @@
 				86EC51051DC339FC00DFC612 /* LaunchScreen.storyboard in Resources */,
 				86EC51021DC339FC00DFC612 /* Assets.xcassets in Resources */,
 				86EC51001DC339FC00DFC612 /* Main.storyboard in Resources */,
+				8614A40E1DC5DB7200B92BD9 /* odr.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +286,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86FC50F01DC742DC00F4E125 /* ODRSource.swift in Sources */,
+				86FC50F21DC75D1600F4E125 /* HTTPSource.swift in Sources */,
+				86EC512A1DC33A1F00DFC612 /* MCResource.swift in Sources */,
 				86EC50FD1DC339FC00DFC612 /* ViewController.swift in Sources */,
 				86EC50FB1DC339FC00DFC612 /* AppDelegate.swift in Sources */,
 			);
@@ -514,6 +541,7 @@
 				86EC51211DC339FC00DFC612 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		86EC51221DC339FC00DFC612 /* Build configuration list for PBXNativeTarget "MCResourceLoaderTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +550,7 @@
 				86EC51241DC339FC00DFC612 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		86EC51251DC339FC00DFC612 /* Build configuration list for PBXNativeTarget "MCResourceLoaderUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +559,7 @@
 				86EC51271DC339FC00DFC612 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
