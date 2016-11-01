@@ -12,7 +12,7 @@ Add files from the __Classes__ folder to your project.
 
 ## Usage
 
-```swift3
+```Swift
 // 1. Create a resource (make sure it is retained by, say, assigning it to an instance variable)
 var resource = MCResource()
 
