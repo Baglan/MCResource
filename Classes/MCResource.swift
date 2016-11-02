@@ -9,7 +9,7 @@
 import Foundation
 
 class MCResource {
-    var URL: URL?
+    var localURL: URL?
     
     private var sources = [Source]()
     func add(source: Source) {
@@ -60,7 +60,7 @@ class MCResource {
                 NSLog("[Error] \(error)")
                 self.tryNextSource()
             } else {
-                self.URL = source.URL
+                self.localURL = source.URL
                 if let completionHandler = self.completionHandler {
                     self.queue.addOperation { completionHandler(url, nil) }
                 }
@@ -71,6 +71,7 @@ class MCResource {
     func endAccessing() {
         if isAccessing {
             currentSource?.endAccessing()
+            localURL = nil
             isAccessing = false
         }
     }
