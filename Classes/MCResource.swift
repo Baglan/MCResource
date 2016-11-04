@@ -60,7 +60,7 @@ class MCResource {
                 NSLog("[Error] \(error)")
                 self.tryNextSource()
             } else {
-                self.localURL = source.URL
+                self.localURL = url
                 if let completionHandler = self.completionHandler {
                     self.queue.addOperation { completionHandler(url, nil) }
                 }
