@@ -56,6 +56,10 @@ extension MCResource {
             task?.resume()
         }
         
+        override func endAccessing() {
+            task?.cancel()
+        }
+        
         override class func canHandle(URL: URL) -> Bool {
             if let scheme = URL.scheme, (scheme == "http" || scheme == "https") {
                 return true
