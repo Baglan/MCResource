@@ -56,6 +56,8 @@ class MCResource {
         currentSource = source
         
         source.beginAccessing { [unowned self] (url, error) in
+            guard self.isAccessing else { return }
+            
             if let error = error {
                 NSLog("[Error] \(error)")
                 self.tryNextSource()
