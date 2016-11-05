@@ -26,8 +26,8 @@ class ViewController: UIViewController {
                 NSLog("[Completed] \(url)")
                 self.imageView.image = UIImage(contentsOfFile: url!.path)
             }
+            self.resource.endAccessing()
         }
-        resource.endAccessing()
     }
 
     override func didReceiveMemoryWarning() {
