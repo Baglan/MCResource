@@ -9,44 +9,58 @@
 import Foundation
 
 extension MCResource {
-    class HTTPSource: MCResource.Source {
+    class HTTPSource: MCResourceSource, ErrorSource {
+        let priority: Int
+        let remoteUrl: URL
+        let localUrl: URL
+        init(remoteUrl: URL, localUrl: URL, priority: Int = 0) {
+            self.remoteUrl = remoteUrl
+            self.localUrl = localUrl
+            self.priority = priority
+        }
+        
+        convenience init(remoteUrl: URL, pathInCache: String, priority: Int = 0) {
+            var cacheUrl = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+            cacheUrl.appendPathComponent(pathInCache)
+            self.init(remoteUrl: remoteUrl, localUrl: cacheUrl, priority: priority)
+        }
+        
         private var request: NSBundleResourceRequest?
         private var task: URLSessionDownloadTask?
-        override func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void) {
-            guard HTTPSource.canHandle(URL: URL) else {
-                completionHandler(nil, error(for: .SchemeNotSupported))
+        let queueHelper = OperationQueueHelper()
+        func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void) {
+            guard let scheme = remoteUrl.scheme, (scheme == "http" || scheme == "https") else {
+                completionHandler(nil, ErrorHelper.error(for: ErrorCodes.SchemeNotSupported.rawValue, source: self))
                 return
             }
             
-            // Check for the cached version
-            var localURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-            let fileName = self.URL.lastPathComponent
-            localURL.appendPathComponent(fileName)
-            
-            if FileManager.default.fileExists(atPath: localURL.path) {
-                completionHandler(localURL, nil)
+            if FileManager.default.fileExists(atPath: localUrl.path) {
+                completionHandler(localUrl, nil)
                 return
             }
             
-            currectOperationQueue = OperationQueue.current
+            queueHelper.preferred = OperationQueue.current
             
-            task = URLSession.shared.downloadTask(with: URL, completionHandler: { [unowned self] (tempURL, response, error) -> Void in
+            task = URLSession.shared.downloadTask(with: remoteUrl, completionHandler: { [unowned self] (tempURL, response, error) -> Void in
                 if let error = error {
-                    self.queue.addOperation { completionHandler(nil, error) }
+                    self.queueHelper.queue.addOperation { completionHandler(nil, error) }
                 } else {
                     guard let tempURL = tempURL else {
-                        self.queue.addOperation { [unowned self] in
-                            completionHandler(nil, self.error(for: .NoTempFile))
+                        
+                        self.queueHelper.queue.addOperation { [unowned self] in
+                            completionHandler(nil, ErrorHelper.error(for: ErrorCodes.NoTempFile.rawValue, source: self))
                         }
                         return
                     }
                     
                     do {
-                        try FileManager.default.moveItem(at: tempURL, to: localURL)
-                        self.queue.addOperation { completionHandler(localURL, nil) }
+                        try FileManager.default.moveItem(at: tempURL, to: self.localUrl)
+                        self.queueHelper.queue.addOperation { [unowned self] in
+                            completionHandler(self.localUrl, nil)
+                        }
                     } catch {
-                        self.queue.addOperation { [unowned self] in
-                            completionHandler(nil, self.error(for: .ErrorMovingToLocalURL))
+                        self.queueHelper.queue.addOperation { [unowned self] in
+                            completionHandler(nil, ErrorHelper.error(for: ErrorCodes.ErrorMovingToLocalURL.rawValue, source: self))
                         }
                         return
                     }
@@ -56,15 +70,8 @@ extension MCResource {
             task?.resume()
         }
         
-        override func endAccessing() {
+        func endAccessing() {
             task?.cancel()
-        }
-        
-        override class func canHandle(URL: URL) -> Bool {
-            if let scheme = URL.scheme, (scheme == "http" || scheme == "https") {
-                return true
-            }
-            return false
         }
         
         // MARK: - Errors
@@ -76,31 +83,10 @@ extension MCResource {
             case ErrorMovingToLocalURL
         }
         
-        static let errorDescriptions: [ErrorCodes: String] = [
-            .SchemeNotSupported: "URL scheme is not 'http' or 'https'",
-            .NoTempFile: "Temporary file not found",
-            .ErrorMovingToLocalURL: "Could not move temporary file to a new location"
+        static let errorDescriptions: [Int: String] = [
+            ErrorCodes.SchemeNotSupported.rawValue: "URL scheme is not 'http' or 'https'",
+            ErrorCodes.NoTempFile.rawValue: "Temporary file not found",
+            ErrorCodes.ErrorMovingToLocalURL.rawValue: "Could not move temporary file to a new location"
         ]
-        
-        func error(for code: ErrorCodes) -> Error {
-            return NSError(
-                domain: HTTPSource.errorDomain,
-                code: code.rawValue,
-                userInfo: [
-                    NSLocalizedDescriptionKey: HTTPSource.errorDescriptions[code]!
-                ]
-            )
-        }
-        
-        // MARK: - Operation queue
-        
-        private var currectOperationQueue: OperationQueue?
-        private var queue: OperationQueue {
-            if let oq = currectOperationQueue {
-                return oq
-            } else {
-                return OperationQueue.main
-            }
-        }
     }
 }

@@ -8,37 +8,49 @@
 
 import Foundation
 
-class MCResource {
+protocol MCResourceSource: class {
+    var priority: Int { get }
+    func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void)
+    func endAccessing()
+}
+
+class MCResource: ErrorSource {
     var localURL: URL?
     
-    private var sources = [Source]()
-    func add(source: Source) {
+    private var sources = [MCResourceSource]()
+    func add(source: MCResourceSource) {
         sources.append(source)
     }
     
-    private var currentSource: Source?
-    private var batch = [Source]()
+    private var currentSource: MCResourceSource?
+    private var batch = [MCResourceSource]()
     private var isAccessing = false
     private var completionHandler: ((URL?, Error?) -> Void)?
+    private var queueHelper = OperationQueueHelper()
     
     func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void) {
         guard !isAccessing else {
-            completionHandler(nil, error(for: .AlreadyAccessing))
+            completionHandler(nil, ErrorHelper.error(for: ErrorCodes.AlreadyAccessing.rawValue, source: self))
             return
         }
         
         guard sources.count > 0 else {
-            completionHandler(nil, error(for: .NoSourcesAvailable))
+            completionHandler(nil, ErrorHelper.error(for: ErrorCodes.NoSourcesAvailable.rawValue, source: self))
             return
         }
         
         isAccessing = true
         self.completionHandler = completionHandler
-        currectOperationQueue = OperationQueue.current
+        queueHelper.preferred = OperationQueue.current
         
         // Copy sources to batch in reversed order
         batch.removeAll()
-        batch.append(contentsOf: sources.reversed())
+        
+        batch.append(
+            contentsOf: sources.sorted { (a, b) -> Bool in
+                return a.priority <= b.priority
+            }
+        )
         
         tryNextSource()
     }
@@ -48,12 +60,16 @@ class MCResource {
         
         guard let source = batch.popLast() else {
             if let completionHandler = completionHandler {
-                queue.addOperation { [unowned self] in completionHandler(nil, self.error(for: .RunOutOfSources)) }
+                queueHelper.queue.addOperation { [unowned self] in
+                    completionHandler(nil, ErrorHelper.error(for: ErrorCodes.RunOutOfSources.rawValue, source: self))
+                }
             }
             return
         }
         
         currentSource = source
+        
+        NSLog("[MCResource] trying \(String(describing: type(of: source)))")
         
         source.beginAccessing { [unowned self] (url, error) in
             guard self.isAccessing else { return }
@@ -64,7 +80,7 @@ class MCResource {
             } else {
                 self.localURL = url
                 if let completionHandler = self.completionHandler {
-                    self.queue.addOperation { completionHandler(url, nil) }
+                    self.queueHelper.queue.addOperation { completionHandler(url, nil) }
                 }
             }
         }
@@ -91,44 +107,9 @@ class MCResource {
         case RunOutOfSources
     }
     
-    static let errorDescriptions: [ErrorCodes: String] = [
-        .AlreadyAccessing: "Already accessing",
-        .NoSourcesAvailable: "No sources available",
-        .RunOutOfSources: "All sources failed"
+    static let errorDescriptions: [Int: String] = [
+        ErrorCodes.AlreadyAccessing.rawValue: "Already accessing",
+        ErrorCodes.NoSourcesAvailable.rawValue: "No sources available",
+        ErrorCodes.RunOutOfSources.rawValue: "All sources failed"
     ]
-    
-    func error(for code: ErrorCodes) -> Error {
-        return NSError(
-            domain: MCResource.errorDomain,
-            code: code.rawValue,
-            userInfo: [
-                NSLocalizedDescriptionKey: MCResource.errorDescriptions[code]!
-            ]
-        )
-    }
-    
-    // MARK: - Operation queue
-    
-    private var currectOperationQueue: OperationQueue?
-    private var queue: OperationQueue {
-        if let oq = currectOperationQueue {
-            return oq
-        } else {
-            return OperationQueue.main
-        }
-    }
-}
-
-extension MCResource {
-    class Source {
-        let URL: URL
-        init(URL: URL) {
-            self.URL = URL
-        }
-        func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void) {}
-        func endAccessing() {}
-        class func canHandle(URL: URL) -> Bool {
-            return false
-        }
-    }
 }

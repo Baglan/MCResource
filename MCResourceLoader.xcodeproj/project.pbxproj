@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8606ABF21DD18A6000FFFADA /* ErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8606ABF11DD18A6000FFFADA /* ErrorHelper.swift */; };
+		8606ABF41DD18A7E00FFFADA /* OperationQueueHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8606ABF31DD18A7E00FFFADA /* OperationQueueHelper.swift */; };
+		8606ABF61DD20DB500FFFADA /* BackgroundDownloadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8606ABF51DD20DB500FFFADA /* BackgroundDownloadHelper.swift */; };
 		8614A40E1DC5DB7200B92BD9 /* odr.png in Resources */ = {isa = PBXBuildFile; fileRef = 8614A40D1DC5DB7200B92BD9 /* odr.png */; settings = {ASSET_TAGS = (odr, ); }; };
+		862893271DD388E90089832F /* ResumingHTTPSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862893261DD388E90089832F /* ResumingHTTPSource.swift */; };
+		86A440941DCEF832003E5542 /* LocalCacheSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A440931DCEF832003E5542 /* LocalCacheSource.swift */; };
+		86A440961DCEF887003E5542 /* LocalODRSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A440951DCEF887003E5542 /* LocalODRSource.swift */; };
 		86EC50FB1DC339FC00DFC612 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EC50FA1DC339FC00DFC612 /* AppDelegate.swift */; };
 		86EC50FD1DC339FC00DFC612 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EC50FC1DC339FC00DFC612 /* ViewController.swift */; };
 		86EC51001DC339FC00DFC612 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86EC50FE1DC339FC00DFC612 /* Main.storyboard */; };
@@ -38,7 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8606ABF11DD18A6000FFFADA /* ErrorHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorHelper.swift; path = Classes/ErrorHelper.swift; sourceTree = "<group>"; };
+		8606ABF31DD18A7E00FFFADA /* OperationQueueHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationQueueHelper.swift; path = Classes/OperationQueueHelper.swift; sourceTree = "<group>"; };
+		8606ABF51DD20DB500FFFADA /* BackgroundDownloadHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BackgroundDownloadHelper.swift; path = Classes/BackgroundDownloadHelper.swift; sourceTree = "<group>"; };
 		8614A40D1DC5DB7200B92BD9 /* odr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odr.png; sourceTree = "<group>"; };
+		862893261DD388E90089832F /* ResumingHTTPSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResumingHTTPSource.swift; path = Classes/ResumingHTTPSource.swift; sourceTree = "<group>"; };
+		86A440931DCEF832003E5542 /* LocalCacheSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalCacheSource.swift; path = Classes/LocalCacheSource.swift; sourceTree = "<group>"; };
+		86A440951DCEF887003E5542 /* LocalODRSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocalODRSource.swift; path = Classes/LocalODRSource.swift; sourceTree = "<group>"; };
 		86EC50F71DC339FC00DFC612 /* MCResourceLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCResourceLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86EC50FA1DC339FC00DFC612 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86EC50FC1DC339FC00DFC612 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +153,12 @@
 				86EC51291DC33A1F00DFC612 /* MCResource.swift */,
 				86FC50EF1DC742DC00F4E125 /* ODRSource.swift */,
 				86FC50F11DC75D1600F4E125 /* HTTPSource.swift */,
+				862893261DD388E90089832F /* ResumingHTTPSource.swift */,
+				86A440931DCEF832003E5542 /* LocalCacheSource.swift */,
+				86A440951DCEF887003E5542 /* LocalODRSource.swift */,
+				8606ABF11DD18A6000FFFADA /* ErrorHelper.swift */,
+				8606ABF31DD18A7E00FFFADA /* OperationQueueHelper.swift */,
+				8606ABF51DD20DB500FFFADA /* BackgroundDownloadHelper.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -286,10 +304,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8606ABF41DD18A7E00FFFADA /* OperationQueueHelper.swift in Sources */,
+				8606ABF61DD20DB500FFFADA /* BackgroundDownloadHelper.swift in Sources */,
 				86FC50F01DC742DC00F4E125 /* ODRSource.swift in Sources */,
+				8606ABF21DD18A6000FFFADA /* ErrorHelper.swift in Sources */,
 				86FC50F21DC75D1600F4E125 /* HTTPSource.swift in Sources */,
 				86EC512A1DC33A1F00DFC612 /* MCResource.swift in Sources */,
+				86A440941DCEF832003E5542 /* LocalCacheSource.swift in Sources */,
+				862893271DD388E90089832F /* ResumingHTTPSource.swift in Sources */,
 				86EC50FD1DC339FC00DFC612 /* ViewController.swift in Sources */,
+				86A440961DCEF887003E5542 /* LocalODRSource.swift in Sources */,
 				86EC50FB1DC339FC00DFC612 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
