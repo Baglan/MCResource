@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Background URLSession
     
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
-        if identifier == BackgroundDownloadHelper.sessionId {
+        if identifier == BackgroundDownloadHelper.defaultSessionId {
             BackgroundDownloadHelper.completionHandler = completionHandler
         }
     }
