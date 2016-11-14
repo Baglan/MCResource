@@ -13,6 +13,8 @@ extension MCResource {
         let localUrl: URL
         let priority: Int
         
+        let fractionCompleted: Double = 0
+        
         init(localUrl: URL, priority: Int = 0) {
             self.localUrl = localUrl
             self.priority = priority

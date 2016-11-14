@@ -10,6 +10,7 @@ import Foundation
 
 protocol MCResourceSource: class {
     var priority: Int { get }
+    var fractionCompleted: Double { get }
     func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void)
     func endAccessing()
 }
@@ -27,6 +28,14 @@ class MCResource: ErrorSource {
     private var isAccessing = false
     private var completionHandler: ((URL?, Error?) -> Void)?
     private var queueHelper = OperationQueueHelper()
+    
+    var fractionCompleted: Double {
+        if let currentSource = currentSource {
+            return currentSource.fractionCompleted
+        } else {
+            return 0
+        }
+    }
     
     func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void) {
         guard !isAccessing else {
@@ -91,7 +100,7 @@ class MCResource: ErrorSource {
             currentSource?.endAccessing()
             localURL = nil
             isAccessing = false
-        }
+        }        
     }
     
     deinit {

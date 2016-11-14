@@ -13,6 +13,19 @@ extension MCResource {
         let priority: Int
         let remoteUrl: URL
         let localUrl: URL
+        
+        var fractionCompleted: Double {
+            if let task = task {
+                let expected = Double(task.countOfBytesExpectedToReceive)
+                if expected == 0 {
+                    return 0
+                }
+                return Double(task.countOfBytesReceived) / expected
+            } else {
+                return 0
+            }
+        }
+        
         init(remoteUrl: URL, localUrl: URL, priority: Int = 0) {
             self.remoteUrl = remoteUrl
             self.localUrl = localUrl
@@ -25,7 +38,6 @@ extension MCResource {
             self.init(remoteUrl: remoteUrl, localUrl: cacheUrl, priority: priority)
         }
         
-        private var request: NSBundleResourceRequest?
         private var task: URLSessionDownloadTask?
         let queueHelper = OperationQueueHelper()
         func beginAccessing(completionHandler: @escaping (URL?, Error?) -> Void) {

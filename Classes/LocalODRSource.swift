@@ -10,6 +10,8 @@ import Foundation
 
 extension MCResource {
     class LocalODRSource: MCResourceSource, ErrorSource {
+        let fractionCompleted: Double = 0
+
         let url: URL
         var priority: Int
         init(url: URL, priority: Int = 0) {

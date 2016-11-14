@@ -12,6 +12,14 @@ extension MCResource {
     class ODRSource: MCResourceSource, ErrorSource {
         var request: NSBundleResourceRequest?
         
+        var fractionCompleted: Double {
+            if let request = request {
+                return request.progress.fractionCompleted
+            } else {
+                return 0
+            }
+        }
+        
         let url: URL
         var priority: Int
         init(url: URL, priority: Int = 0) {
