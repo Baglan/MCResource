@@ -18,18 +18,18 @@ var resource = MCResource()
 
 // 2. Add sources
 resource.add(
-  source: MCResource.ODRSource(
-    URL: URL(
-      string: "odr://odr/odr.png"
-    )!
-  )
+    source: MCResource.ODRSource(
+        url: URL(string: "odr://odr/odr.png")!,
+        priority: 10
+    )
 )
+
 resource.add(
-  source: MCResource.HTTPSource(
-    URL: URL(
-      string: "https://github.com/Baglan/MCResource/raw/master/web.png"
-    )!
-  )
+    source: MCResource.HTTPSource(
+        remoteUrl: URL(string: "https://github.com/Baglan/MCResource/raw/master/web.png")!,
+        pathInCache: "cachedWebImage",
+        priority: 0
+    )
 )
 
 // 3. Request the resource and process the result

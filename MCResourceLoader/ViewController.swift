@@ -57,14 +57,6 @@ class ViewController: UIViewController {
             }
             self.resource.endAccessing()
         }
-        
-        Timer.scheduledTimer(
-            withTimeInterval: 3,
-            repeats: false,
-            block: { (timer) -> Void in
-                self.resource.endAccessing()
-            }
-        )
     }
 
     override func didReceiveMemoryWarning() {
